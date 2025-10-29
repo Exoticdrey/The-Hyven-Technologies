@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyven - Innovation Beyond Boundaries</title>
+     <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #00d4ff;
+            --dark: #0a0e27;
+            --darker: #050814;
+            --light: #ffffff;
+            --gray: #8892b0;
+            --card-bg: rgba(15, 23, 42, 0.8);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0e27 0%, #050814 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 5px 30px rgba(0, 255, 136, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            margin-right: 20px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-image img {
+            width: 100%;
+            filter: drop-shadow(0 20px 50px rgba(0, 255, 136, 0.3));
+        }
+
+        /* Grid Pattern Overlay */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 4rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .social a{
+            color: #00d4ff;
+        }
+        
+        /* Companies Preview */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .company-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .company-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.2);
+        }
+
+        .company-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .company-info {
+            padding: 2rem;
+        }
+
+        .company-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .company-info p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .view-more-btn {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-details p {
+            color: var(--gray);
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(5, 8, 20, 0.9);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        footer p {
+            color: var(--gray);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        .modal-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-content p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .modal-details {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .modal-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .modal-detail-item strong {
+            color: var(--primary);
+            min-width: 100px;
+        }
+
+        .modal-detail-item a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .modal-detail-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-text h1 {
+                font-size: 3.5rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 968px) {
+            .hamburger {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                flex-direction: column;
+                background: rgba(10, 14, 39, 0.98);
+                backdrop-filter: blur(10px);
+                width: 280px;
+                height: 100vh;
+                padding: 6rem 2rem 2rem;
+                gap: 2rem;
+                transition: right 0.4s ease;
+                border-left: 1px solid rgba(0, 255, 136, 0.2);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 0.5rem 0;
+            }
+
+            .hero-content,
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-text p {
+                font-size: 1.2rem;
+            }
+
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .about-content {
+                padding: 3rem 2rem;
+            }
+
+            .hero-image svg {
+                width: 100%;
+                max-width: 400px;
+                height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.2rem 5%;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .hero {
+                padding: 7rem 5% 3rem;
+                min-height: auto;
+            }
+
+            .hero-text h1 {
+                font-size: 2.3rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .cta-button {
+                padding: 0.9rem 2rem;
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            section {
+                padding: 5rem 5%;
+            }
+
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+
+            .section-header p {
+                font-size: 1.1rem;
+            }
+
+            .about-text h3 {
+                font-size: 1.7rem;
+            }
+
+            .about-text p {
+                font-size: 1rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .stat-label {
+                font-size: 0.85rem;
+            }
+
+            .company-image {
+                height: 180px;
+                font-size: 3.5rem;
+            }
+
+            .company-info {
+                padding: 1.5rem;
+            }
+
+            .company-info h3 {
+                font-size: 1.3rem;
+            }
+
+            .company-info p {
+                font-size: 0.95rem;
+            }
+
+            .contact-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .contact-details h4 {
+                font-size: 1rem;
+            }
+
+            .contact-details p {
+                font-size: 0.95rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 2.5rem 2rem;
+            }
+
+            .page-header {
+                padding: 8rem 5% 3rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+
+            .page-header p {
+                font-size: 1.2rem;
+            }
+
+            .modal-content {
+                padding: 2.5rem;
+                max-width: 90%;
+            }
+
+            .modal-content h2 {
+                font-size: 2rem;
+            }
+
+            .modal-content p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                width: 250px;
+                padding: 5rem 1.5rem 2rem;
+            }
+
+            .hero {
+                padding: 6rem 5% 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 1.9rem;
+                line-height: 1.3;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+                margin-bottom: 1.8rem;
+            }
+
+            .cta-button {
+                padding: 0.85rem 1.8rem;
+                font-size: 0.95rem;
+                 margin-bottom: 10px;
+            }
+
+            .hero-image {
+                order: -1;
+                margin-bottom: 2rem;
+            }
+
+            .hero-image svg {
+                max-width: 300px;
+            }
+
+            section {
+                padding: 4rem 5%;
+            }
+
+            .section-header {
+                margin-bottom: 3rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.9rem;
+            }
+
+            .section-header p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .about-content {
+                padding: 2rem 1.5rem;
+                gap: 2.5rem;
+            }
+
+            .about-text h3 {
+                font-size: 1.5rem;
+            }
+
+            .about-text p {
+                font-size: 0.95rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .stat-item {
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 10px;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+
+            .stat-label {
+                font-size: 0.9rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .company-image {
+                height: 160px;
+                font-size: 3rem;
+            }
+
+            .company-info {
+                padding: 1.5rem;
+            }
+
+            .company-info h3 {
+                font-size: 1.25rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .company-info p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            .view-more-btn {
+                margin-top: 3rem;
+            }
+
+            .contact-content {
+                gap: 2rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .contact-item {
+                flex-direction: row;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .contact-details h4 {
+                font-size: 0.95rem;
+            }
+
+            .contact-details p {
+                font-size: 0.85rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.2rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 0.85rem;
+                font-size: 0.9rem;
+            }
+
+            .form-group textarea {
+                min-height: 120px;
+            }
+
+            footer {
+                padding: 2rem 5%;
+                font-size: 0.9rem;
+            }
+
+            .page-header {
+                padding: 7rem 5% 2rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+
+            .all-companies {
+                padding: 3rem 5%;
+            }
+
+            .modal {
+                padding: 1rem;
+            }
+
+            .modal-content {
+                padding: 2rem 1.5rem;
+                max-width: 95%;
+                max-height: 85vh;
+            }
+
+            .modal-close {
+                top: 1rem;
+                right: 1rem;
+                font-size: 1.8rem;
+            }
+
+            .modal-content h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .modal-content p {
+                font-size: 0.95rem;
+                line-height: 1.7;
+                margin-bottom: 1.5rem;
+            }
+
+            .modal-details {
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .modal-detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.8rem;
+                gap: 0.5rem;
+            }
+
+            .modal-detail-item strong {
+                min-width: auto;
+                font-size: 0.9rem;
+            }
+
+            .modal-detail-item span,
+            .modal-detail-item a {
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .hero-text h1 {
+                font-size: 1.7rem;
+            }
+
+            .hero-text p {
+                font-size: 0.95rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                 margin-bottom: 10px;
+            }
+
+            .section-header h2 {
+                font-size: 1.7rem;
+            }
+
+            .section-header p {
+                font-size: 0.95rem;
+            }
+
+            .about-content {
+                padding: 1.5rem 1rem;
+            }
+
+            .about-text h3 {
+                font-size: 1.3rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .company-image {
+                height: 140px;
+                font-size: 2.5rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 1.5rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem 1rem;
+            }
+
+            .modal-content h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            nav {
+                padding: 1rem 4%;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding: 5.5rem 4% 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-text p {
+                font-size: 0.9rem;
+            }
+
+            section {
+                padding: 3rem 4%;
+            }
+
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .cta-button {
+                padding: 0.75rem 1.3rem;
+                font-size: 0.85rem;
+                 margin-bottom: 10px;
+            }
+
+            .company-info {
+                padding: 1.2rem;
+            }
+
+            .company-info h3 {
+                font-size: 1.1rem;
+            }
+
+            .company-info p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Companies Page Specific */
+        .page-header {
+            text-align: center;
+            padding: 10rem 5% 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: var(--gray);
+        }
+
+        .all-companies {
+            padding: 4rem 5%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+    <div class="grid-pattern"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="#">HYVEN</a></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#companies">Companies</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Innovation <span class="highlight">Beyond Boundaries</span></h1>
+                    <p>Empowering the future through cutting-edge technology solutions. We transform ideas into reality with our diverse portfolio of tech-driven companies.</p>
+                    <a href="#companies" class="cta-button">Explore Our Companies</a>
+                    <a href="#projects" class="cta-button">Explore Our Projects</a>
+                </div>
+                <div class="hero-image">
+                    <svg width="500" height="500" viewBox="0 0 500 500">
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="250" cy="250" r="200" fill="none" stroke="url(#grad1)" stroke-width="2" opacity="0.3">
+                            <animateTransform attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="20s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="250" cy="250" r="150" fill="none" stroke="url(#grad1)" stroke-width="2" opacity="0.5">
+                            <animateTransform attributeName="transform" type="rotate" from="360 250 250" to="0 250 250" dur="15s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="250" cy="250" r="100" fill="none" stroke="url(#grad1)" stroke-width="2" opacity="0.7">
+                            <animateTransform attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="10s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="250" cy="250" r="60" fill="url(#grad1)" opacity="0.8"/>
+                        <text x="250" y="260" text-anchor="middle" fill="#0a0e27" font-size="40" font-weight="bold">Hyven</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-header">
+                <h2>About Hyven</h2>
+                <p>Leading the charge in technological innovation</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Who We Are</h3>
+                    <p>Hyven is a forward-thinking parent company that brings together diverse technology ventures under one innovative umbrella. We specialize in creating, nurturing, and scaling companies that push the boundaries of what's possible.</p>
+                    <p>Our mission is to foster innovation, drive technological advancement, and create sustainable solutions that make a lasting impact on industries worldwide.</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">Companies</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Employees</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Countries</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <svg width="100%" height="400" viewBox="0 0 400 400">
+                        <defs>
+                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0.8" />
+                            </linearGradient>
+                        </defs>
+                        <rect x="50" y="50" width="300" height="300" rx="20" fill="none" stroke="url(#grad2)" stroke-width="3"/>
+                        <rect x="80" y="80" width="240" height="240" rx="15" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="0.7"/>
+                        <rect x="110" y="110" width="180" height="180" rx="10" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="0.5"/>
+                        <circle cx="200" cy="200" r="50" fill="url(#grad2)"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Projects Preview -->
+        <section id="projects">
+            <div class="section-header">
+                <h2>Our Projects</h2>
+                <p>Discover the innovative works done by the Hyven ecosystem</p>
+            </div>
+            <div class="companies-grid">
+                <div class="company-card" onclick="openModal('niit')">
+                    <div class="company-image"><i class="fa-solid fa-school"></i></div>
+                    <div class="company-info">
+                        <h3>NIIT Owerri</h3>
+                        <p>Empowering the Next Generation Of Tech Leaders.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openModal('churchill')">
+                    <div class="company-image"><i class="fa-solid fa-phone-flip"></i></div>
+                    <div class="company-info">
+                        <h3>Churchill Expansions</h3>
+                        <p>Get the best access to top device accessories.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openModal('coffee')">
+                    <div class="company-image"><i class="fa-solid fa-mug-hot"></i></div>
+                    <div class="company-info">
+                        <h3>The Coffee Supply House</h3>
+                        <p>We don’t just deliver coffee, we equip your business with everything it needs to thrive, helping you create a unique experience for your customers.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="view-more-btn">
+                <a href="#" class="cta-button" onclick="showAllProjects(); return false;">View All Projects</a>
+            </div>
+        </section>
+
+
+
+        <!-- Companies Preview -->
+        <section id="companies">
+            <div class="section-header">
+                <h2>Our Companies</h2>
+                <p>Discover the innovative ventures within the Hyven ecosystem</p>
+            </div>
+            <div class="companies-grid">
+                <div class="company-card" onclick="openCompanyModal('hyven')">
+                    <div class="company-image"><i class="fa-solid fa-school"></i></div>
+                    <div class="company-info">
+                        <h3>Hyven</h3>
+                        <p>Everything you need for your college journey, simplified.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openCompanyModal('symphony')">
+                    <div class="company-image"><i class="fa-solid fa-palette"></i></div>
+                    <div class="company-info">
+                        <h3>Symphony</h3>
+                        <p>We Help Connect Passionate Artists With Investors.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openCompanyModal('crystal')">
+                    <div class="company-image"><i class="fa-solid fa-hospital"></i></div>
+                    <div class="company-info">
+                        <h3>Crystal Care</h3>
+                        <p>Trusted Personalized Care for Seniors.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="view-more-btn">
+                <a href="#" class="cta-button" onclick="showAllCompanies(); return false;">View All Companies</a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>Let's discuss how we can work together</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-comments"></i></div>
+                        <div class="contact-details">
+                            <h4>Social Media</h4>
+                            <p class="social">Tiktok: <a href="">hyven.com</a><br>Instagram: <a href="">hyven.com.ng</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+1 234 567 8910</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-message"></i></div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p class="social"><a href="mailto:hello@hyven.com">Hello@hyven.com</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%; cursor: pointer; border: none;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- Projects Page Content (Hidden by default) -->
+    <div id="projectsPage" style="display: none;">
+        <div class="page-header">
+            <h1>Our Projects</h1>
+            <p>The innovative ventures driving the future</p>
+        </div>
+        <section class="all-companies">
+            <div class="companies-grid">
+                <div class="company-card" onclick="openModal('niit')">
+                    <div class="company-image"><i class="fa-solid fa-rocket"></i></div>
+                    <div class="company-info">
+                        <h3>NIIT Owerri</h3>
+                        <p>Empowering the Next Generation Of Tech Leaders.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openModal('churchill')">
+                    <div class="company-image"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                    <div class="company-info">
+                        <h3>Churchill Expansions</h3>
+                        <p>Get the best access to top device accessories.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openModal('coffee')">
+                    <div class="company-image"><i class="fa-solid fa-bolt-lightning"></i></div>
+                    <div class="company-info">
+                        <h3>The Coffee Supply House</h3>
+                        <p>We don’t just deliver coffee, we equip your business with everything it needs to thrive, helping you create a unique experience for your customers.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openModal('symphony')">
+                    <div class="company-image"><i class="fa-solid fa-palette"></i></div>
+                    <div class="company-info">
+                        <h3>Symphony</h3>
+                        <p>We Help Connect Passionate Artists With Investors.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openModal('crystal')">
+                    <div class="company-image"><i class="fa-solid fa-hospital"></i></div>
+                    <div class="company-info">
+                        <h3>Crystal Care</h3>
+                        <p>Trusted Personalized Care for Seniors.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+    <!-- Companies Page Content (Hidden by default) -->
+    <div id="companiesPage" style="display: none;">
+        <div class="page-header">
+            <h1>Our Companies</h1>
+            <p>The innovative ventures driving the future</p>
+        </div>
+        <section class="all-companies">
+            <div class="companies-grid">
+                <div class="company-card" onclick="openCompanyModal('hyven')">
+                    <div class="company-image"><i class="fa-solid fa-school"></i></div>
+                    <div class="company-info">
+                        <h3>Hyven</h3>
+                        <p>Everything you need for your college journey, simplified.</p>
+                    </div>
+                </div>
+                
+                <div class="company-card" onclick="openCompanyModal('hyvenhub')">
+                    <div class="company-image"><i class="fa-solid fa-briefcase"></i></div>
+                    <div class="company-info">
+                        <h3>Hyven Hub</h3>
+                        <p>Discover Top Local Businesses With HyvenHub.</p>
+                    </div>
+                </div>
+                <div class="company-card" onclick="openCompanyModal('hyvenfood')">
+                    <div class="company-image"><i class="fa-solid fa-utensils"></i></div>
+                    <div class="company-info">
+                        <h3>Hyven Food</h3>
+                        <p>Unlock a world of culinary recipes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Hyven Corporation. All rights reserved. Innovation Beyond Boundaries.</p>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Company Data
+        const companies = {
+            hyven: {
+                name: 'Hyven',
+                icon: '<i class="fa-solid fa-school"></i>',
+                description: 'Campus life, simplified. Discover the perfect living space and compatible roomates near your campus. Buy and sell textbooks, furniture, and more with fellow students on campus. Build your network, find study groups, and connect with peers in your courses. Simplified property management for agents and landlords serving student housing.',
+                website: 'www.hyven.com.ng',
+                address: 'Nigeria (Nationwide)',
+                phone: 'Unavailable',
+                email: 'Unavailable'
+            },
+            
+            hyvenhub: {
+                name: 'Hyven Hub',
+                icon: '<i class="fa-solid fa-briefcase"></i>',
+                description: 'A verified platform where people can discover, review, and save local businesses (restaurants, gyms, recreational centers, etc.), while business owners can showcase their services and admins ensure authenticity. Verified profiles make it simple for you to discover authentic local businesses and for businesses to reach real customers.',
+                website: 'https://hyvenhub.netlify.app/',
+                address: 'Nigeria (Worldwide)',
+                phone: 'Unavailable',
+                email: 'Unavailable'
+            },
+            hyvenfood: {
+                name: 'Hyven Food',
+                icon: '<i class="fa-solid fa-utensils"></i>',
+                description: 'Unlock a world of culinary recipes and unleash your inner chef the easy way. Join Hyven Foods now and embark on a culinary journey to explore, create and savor amazing recipes.',
+                website: 'Unavailable',
+                address: 'Unavailable',
+                phone: 'Unavailable',
+                email: 'Unavailable'
+            },
+        };
+
+
+
+        // project Data
+        const projects = {
+            niit: {
+                name: 'NIIT Owerri',
+                icon: '<i class="fa-solid fa-school"></i>',
+                description: 'Unlock your potential with hands-on training in coding, design, and innovation. Join a community where creativity meets cutting-edge technology — and your future begins. Leading computer and ICT training institute in Owerri, Imo State.',
+                website: 'https://niitowerri.com/',
+                address: '23 Umuoba Uratta Rd, beside former ITC park, Owerri 460281, Imo State',
+                phone: '+234 816 221 6532',
+                email: 'info@niitowerri.com'
+            },
+            churchill: {
+                name: 'Churchill Expansions',
+                icon: '<i class="fa-solid fa-phone-flip"></i>',
+                description: 'Churchill Expansions is a forward-thinking tech brand redefining the way people experience gadgets. From the latest smartphones and smartwatches to high-performance accessories and innovative devices, Churchill Expansions delivers quality, reliability, and style in every product. The brand stands for accessibility and trust — making premium technology available to everyone who values performance and design.',
+                website: 'https://www.churchillexpansions.com/',
+                address: '3-9 OLU KOLEOSHO STREET MOKLAND PLAZA (5th floor) OFF MEDICAL ROAD COMPUTER VILLAGE IKEJA.',
+                phone: '091 6027 3360',
+                email: 'Unavailable'
+            },
+            coffee: {
+                name: 'The Coffee Supply House',
+                icon: '<i class="fa-solid fa-mug-hot"></i>',
+                description: 'The official representative of Patrick Street Import Ltd. The exclusive distributor of Buondi coffee beans by Nestlé in both the Republic of Ireland and Northern Ireland. We don’t just deliver coffee, we equip your business with everything it needs to thrive, helping you create a unique experience for your customers.',
+                website: 'https://thecoffeesupplyhouse.ie/',
+                address: 'Based in Ennis, Ireland',
+                phone: 'Unavailable',
+                email: 'info@thecoffeesupplyhouse.ie'
+            },
+            symphony: {
+                name: 'Symphony',
+                icon: '<i class="fa-solid fa-palette"></i>',
+                description: 'We Help Artists Connect With Investors. Our platform bridges the gap between visionary artists and strategic investors who believe in your creative journey. We curate meaningful connections that transform your artistic vision into sustainable opportunities. Gain early access to tomorrows leading artists today. Our platform connects you with vetted creative talent, offering unique investment opportunities with significant growth potential.',
+                website: 'https://symphonyent.com/',
+                address: 'Lagos, Nigeria (Worldwide)',
+                phone: 'Unavailable',
+                email: 'info@symphonyent.com'
+            },
+            crystal: {
+                name: 'Crystal Care',
+                icon: '<i class="fa-solid fa-hospital"></i>',
+                description: 'We match seniors with qualified caregivers who can assist with daily living activities and provide companionship. Get started today and experience seamless care delivered at home. CristalCare customer satisfaction is 10 times higher than industry average. We offer unprecedented choice in quality senior caregivers, modern technology solutions and exceptional customer service.',
+                website: 'https://crystalcare.vercel.app/',
+                address: 'Unavailable',
+                phone: '1-800-123-4567',
+                email: 'info@cristalcare.com'
+            },
+        };
+
+
+
+
+        // Navigation
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const navbar = document.getElementById('navbar');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Modal functions
+        function openCompanyModal(companyId) {
+            const company = companies[companyId];
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div style="text-align: center; font-size: 4rem; margin-bottom: 1.5rem;">${company.icon}</div>
+                <h2>${company.name}</h2>
+                <p>${company.description}</p>
+                <div class="modal-details">
+                    <div class="modal-detail-item">
+                        <strong>🌐 Website:</strong>
+                        <a href="https://${company.website}" target="_blank">${company.website}</a>
+                    </div>
+                    <div class="modal-detail-item">
+                        <strong>📍 Address:</strong>
+                        <span>${company.address}</span>
+                    </div>
+                    <div class="modal-detail-item">
+                        <strong>📞 Phone:</strong>
+                        <a href="tel:${company.phone}">${company.phone}</a>
+                    </div>
+                    <div class="modal-detail-item">
+                        <strong>✉️ Email:</strong>
+                        <a href="mailto:${company.email}">${company.email}</a>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+
+        function openModal(projectId) {
+            const project = projects[projectId];
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div style="text-align: center; font-size: 4rem; margin-bottom: 1.5rem;">${project.icon}</div>
+                <h2>${project.name}</h2>
+                <p>${project.description}</p>
+                <div class="modal-details">
+                    <div class="modal-detail-item">
+                        <strong>🌐 Website:</strong>
+                        <a href="https://${project.website}" target="_blank">${project.website}</a>
+                    </div>
+                    <div class="modal-detail-item">
+                        <strong>📍 Address:</strong>
+                        <span>${project.address}</span>
+                    </div>
+                    <div class="modal-detail-item">
+                        <strong>📞 Phone:</strong>
+                        <a href="tel:${project.phone}">${project.phone}</a>
+                    </div>
+                    <div class="modal-detail-item">
+                        <strong>✉️ Email:</strong>
+                        <a href="mailto:${project.email}">${project.email}</a>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
+            }
+        });
+
+        // Show all companies page
+        function showAllCompanies() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('companiesPage').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Update nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.getAttribute('href') === '#home') {
+                    link.textContent = 'Back to Home';
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        showHome();
+                    };
+                }
+            });
+        }
+
+
+        // Show all projects page
+        function showAllProjects() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('projectsPage').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Update nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.getAttribute('href') === '#home') {
+                    link.textContent = 'Back to Home';
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        showHome();
+                    };
+                }
+            });
+        }
+
+
+        function showHome() {
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('companiesPage').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Reset nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.textContent === 'Back to Home') {
+                    link.textContent = 'Home';
+                    link.onclick = null;
+                }
+            });
+        }
+
+
+        function showHome() {
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('projectsPage').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Reset nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.textContent === 'Back to Home') {
+                    link.textContent = 'Home';
+                    link.onclick = null;
+                }
+            });
+        }
+
+
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        }
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-image');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
