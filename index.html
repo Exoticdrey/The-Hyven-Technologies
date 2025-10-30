@@ -380,8 +380,12 @@
         /* Contact Section */
         .contact-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            /* grid-template-columns: 1fr 1fr; */
+            /* gap: 4rem; */
+            /* border: 1px solid black; */
+            /* justify-content: center; */
+            width: 50%;
+            margin-left: 24%;
         }
 
         .contact-info {
@@ -389,6 +393,8 @@
             padding: 3rem;
             border-radius: 20px;
             border: 1px solid rgba(0, 255, 136, 0.1);
+            /* border: 1px solid red; */
+            
         }
 
         .contact-item {
@@ -418,7 +424,7 @@
         .contact-details p {
             color: var(--gray);
         }
-
+/* 
         .contact-form {
             background: var(--card-bg);
             padding: 3rem;
@@ -458,7 +464,7 @@
         .form-group textarea {
             resize: vertical;
             min-height: 150px;
-        }
+        } */
 
         /* Footer */
         footer {
@@ -583,6 +589,10 @@
             .companies-grid {
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
+            .contact-content{
+                width: 100%;
+                margin-left: auto;
+            }
         }
 
         @media (max-width: 968px) {
@@ -658,6 +668,10 @@
                 height: auto;
                 /* border: 1px solid white; */
                 display: none;
+            }
+            .contact-content{
+                width: 100%;
+                margin-left: auto;
             }
         }
 
@@ -745,7 +759,10 @@
                 height: 45px;
                 font-size: 1.3rem;
             }
-
+            .contact-content{
+                width: 100%;
+                margin-left: auto;
+            }
             .contact-details h4 {
                 font-size: 1rem;
             }
@@ -901,7 +918,11 @@
             }
 
             .contact-content {
-                gap: 2rem;
+                /* gap: 2rem;    */
+            }
+            .contact-content{
+                width: 100%;
+                margin-left: auto;
             }
 
             .contact-info,
@@ -1056,6 +1077,10 @@
 
             .stat-number {
                 font-size: 2rem;
+            }
+            .contact-content{
+                width: 100%;
+                margin-left: auto;
             }
 
             .company-image {
